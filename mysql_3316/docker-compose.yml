@@ -1,0 +1,38 @@
+version: "3"
+services:
+  db:
+    image: mysql:8.0
+    container_name: "mysql_${DB_PORT}"
+    # command:  --default-authentication-plugin=mysql_native_passwor
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./logs:/var/log/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf
+
+    # 定数の優先度 : environment > env_file
+    env_file:
+      - ./.env
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+    ports:
+      - ${DB_PORT}:3306
+
+  # db-testing:
+  #   image: mysql:8.0
+  #   volumes:
+  #     - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  #   tmpfs:
+  #     - /var/lib/mysql
+  #     - /var/log/mysql
+  #   environment:
+  #     - MYSQL_DATABASE=${DB_NAME}
+  #     - MYSQL_USER=${DB_USER}
+  #     - MYSQL_PASSWORD=${DB_PASS}
+  #     - MYSQL_ROOT_PASSWORD=${DB_PASS}
+  #     - TZ=${TZ}
+# volumes:
+#   db-store:
