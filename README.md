@@ -11,7 +11,7 @@ Dockerを利用してMySQL8環境を用意する。
 ## 起動
 
 ```shell
-$ chmod 777 logs/ mysql/
+$ chmod 777 logs/ mysql/ logs/bin_log/
 $ docker-compose up -d
 Starting mysql_3316 ... done
 $ docker-compose ps
@@ -26,6 +26,27 @@ Unix ソケットは使えないので注意
 
 ```shell
 $ mysql -u db_user -p -h localhost -P 3316 --protocol=tcp
+```
+
+## ディレクトリ構成
+
+```shell
+$ tree ./
+./
+├── docker-compose.yml
+├── .env    # ymlで使用する定数ファイル
+├── my.cnf  # MySQL設定ファイル
+├── logs    # ログ保存先
+│   ├── bin_log   # レプリケーション設定使用時のバイナリログ
+│   │   ├── repl-bin.000001
+│   │   └── repl-bin.index
+│   ├── mysql-error.log
+│   ├── mysql-query.log
+│   └── mysql-slow.log
+└── mysql   # MySQLスキーマの物理保存先
+    ├── mysql.sock -> /var/run/mysqld/mysqld.sock
+    ├── performance_schema
+    └── ...
 ```
 
 ## AWS での速度検証
