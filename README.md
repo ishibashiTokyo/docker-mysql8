@@ -20,6 +20,19 @@ $ docker-compose ps
 mysql_3316   docker-entrypoint.sh mysqld   Up      0.0.0.0:3316->3306/tcp,:::3316->3306/tcp, 33060/tcp
 ```
 
+基本操作
+
+```shell
+# コンテナの停止
+$ docker-compose stop
+# コンテナの開始
+$ docker-compose start
+# コンテナ一覧
+$ docker-compose ps -a
+# ログ
+$ docker compose logs
+```
+
 ## ホストから Docker の MySQL に接続
 
 Unix ソケットは使えないので注意
