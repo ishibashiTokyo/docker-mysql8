@@ -4,9 +4,11 @@ Dockerを利用してMySQL8環境を用意する。
 
 ## 使い方
 
-.env でポートを変えれば複数起動可能
-
-@todo レプリカ設定の YAML も作成する。
+- .env でポートを変えれば複数起動可能
+- my.cnfでレプリカ、ソースの設定をコメントアウトであるので必要に応じて有効化する
+- .gitkeepファイルは初回起動前に消しておく
+- レプリケーション用のバイナリログはlogs/bin_log/内に出力
+- 起動前にlogs/, logs/bin_log/, mysql/ディレクトリの権限を変更しておく
 
 ## 起動
 
@@ -24,13 +26,17 @@ mysql_3316   docker-entrypoint.sh mysqld   Up      0.0.0.0:3316->3306/tcp,:::331
 
 ```shell
 # コンテナの停止
-$ docker-compose stop
+$ docker stop {コンテナ名}
 # コンテナの開始
-$ docker-compose start
+$ docker start {コンテナ名}
+# コンテナの再起動
+$ docker restart {コンテナ名}
 # コンテナ一覧
 $ docker-compose ps -a
 # ログ
 $ docker compose logs
+# イメージの確認
+$ docker images -a
 ```
 
 ## ホストから Docker の MySQL に接続
